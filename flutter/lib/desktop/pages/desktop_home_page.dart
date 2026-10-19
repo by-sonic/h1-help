@@ -12,6 +12,7 @@ import 'package:flutter_hbb/consts.dart';
 import 'package:flutter_hbb/desktop/pages/connection_page.dart';
 import 'package:flutter_hbb/desktop/pages/desktop_setting_page.dart';
 import 'package:flutter_hbb/desktop/pages/desktop_tab_page.dart';
+import 'package:flutter_hbb/desktop/pages/h1_help_home.dart';
 import 'package:flutter_hbb/desktop/widgets/update_progress.dart';
 import 'package:flutter_hbb/models/platform_model.dart';
 import 'package:flutter_hbb/models/server_model.dart';
@@ -59,6 +60,30 @@ class _DesktopHomePageState extends State<DesktopHomePage>
   Widget build(BuildContext context) {
     super.build(context);
     final isIncomingOnly = bind.isIncomingOnly();
+    if (isIncomingOnly) {
+      // H1 VPN: своё окно удалённой помощи (h1_help_home.dart). Ширина своя —
+      // окно подгоняется под содержимое (_updateWindowSize).
+      WidgetsBinding.instance.addPostFrameCallback((_) => _updateWindowSize());
+      return _buildBlock(
+          child: Container(
+        color: H1Colors.bg,
+        alignment: Alignment.topLeft,
+        child: SingleChildScrollView(
+          controller: _leftPaneScrollController,
+          child: UnconstrainedBox(
+            alignment: Alignment.topLeft,
+            constrainedAxis: Axis.vertical,
+            child: H1HelpHome(
+              key: _childKey,
+              onLayoutChanged: () => Future.delayed(
+                  const Duration(milliseconds: 300), () {
+                if (isInHomePage()) _updateWindowSize();
+              }),
+            ),
+          ),
+        ),
+      ));
+    }
     return _buildBlock(
         child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,

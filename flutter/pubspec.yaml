@@ -159,6 +159,9 @@ flutter:
     - assets/
 
   fonts:
+    - family: Manrope  # H1 VPN, OFL (assets/Manrope-OFL.txt)
+      fonts:
+        - asset: assets/Manrope.ttf
     - family: GestureIcons
       fonts:
         - asset: assets/gestures.ttf

@@ -338,8 +338,9 @@ mod win {
     /// Note: This function must be kept in sync with `src/core_main.rs`.
     #[inline]
     pub(super) fn is_quick_support_exe(exe: &str) -> bool {
-        let exe = exe.to_lowercase();
-        exe.contains("-qs-") || exe.contains("-qs.exe") || exe.contains("_qs.exe")
+        // H1 VPN: всегда «быстрая помощь» (см. src/core_main.rs).
+        let _ = exe;
+        true
     }
 }
 

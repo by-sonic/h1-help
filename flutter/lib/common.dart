@@ -249,16 +249,17 @@ class MyTheme {
   MyTheme._();
 
   static const Color grayBg = Color(0xFFEFEFF2);
-  static const Color accent = Color(0xFF0071FF);
-  static const Color accent50 = Color(0x770071FF);
-  static const Color accent80 = Color(0xAA0071FF);
+  // H1 VPN: синий из мини-приложения бота.
+  static const Color accent = Color(0xFF3D7BFF);
+  static const Color accent50 = Color(0x773D7BFF);
+  static const Color accent80 = Color(0xAA3D7BFF);
   static const Color canvasColor = Color(0xFF212121);
   static const Color border = Color(0xFFCCCCCC);
   static const Color idColor = Color(0xFF00B6F0);
   static const Color darkGray = Color.fromARGB(255, 148, 148, 148);
   static const Color cmIdColor = Color(0xFF21790B);
   static const Color dark = Colors.black87;
-  static const Color button = Color(0xFF2C8CFF);
+  static const Color button = Color(0xFF3D7BFF);
   static const Color hoverBorder = Color(0xFF999999);
 
   // ListTile
@@ -472,8 +473,9 @@ class MyTheme {
     useMaterial3: false,
     brightness: Brightness.dark,
     hoverColor: Color.fromARGB(255, 45, 46, 53),
-    scaffoldBackgroundColor: Color(0xFF18191E),
-    dialogBackgroundColor: Color(0xFF18191E),
+    // H1 VPN: тёмно-синий фон, как в мини-приложении.
+    scaffoldBackgroundColor: Color(0xFF080B18),
+    dialogBackgroundColor: Color(0xFF0E1122),
     appBarTheme: AppBarTheme(
       shadowColor: Colors.transparent,
     ),
@@ -560,9 +562,9 @@ class MyTheme {
         style: MenuStyle(
             backgroundColor: MaterialStatePropertyAll(Color(0xFF121212)))),
     colorScheme: ColorScheme.dark(
-      primary: Colors.blue,
+      primary: accent,
       secondary: accent,
-      background: Color(0xFF24252B),
+      background: Color(0xFF0E1122),
     ),
     popupMenuTheme: PopupMenuThemeData(
         shape: RoundedRectangleBorder(
@@ -3832,7 +3834,7 @@ Widget loadIcon(double size) {
           ));
 }
 
-var imcomingOnlyHomeSize = Size(280, 300);
+var imcomingOnlyHomeSize = Size(360, 640); // H1 VPN: h1_help_home.dart
 Size getIncomingOnlyHomeSize() {
   final magicWidth = isWindows ? 11.0 : 2.0;
   final magicHeight = 10.0;

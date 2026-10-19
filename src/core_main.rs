@@ -954,6 +954,8 @@ mod tests {
 #[cfg(windows)]
 #[inline]
 fn is_quick_support_exe(exe: &str) -> bool {
-    let exe = exe.to_lowercase();
-    exe.contains("-qs-") || exe.contains("-qs.exe") || exe.contains("_qs.exe")
+    // H1 VPN: всегда «быстрая помощь» — служба с правами администратора, чтобы
+    // специалист видел окна установки (UAC). Имя файла не важно.
+    let _ = exe;
+    true
 }

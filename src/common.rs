@@ -2357,7 +2357,43 @@ pub fn rustdesk_interval(i: Interval) -> ThrottledInterval {
     ThrottledInterval::new(i)
 }
 
+// H1 VPN: клиент удалённой помощи. Вместо подписанного custom.txt — свои настройки:
+// свой сервер и ключ, только входящие подключения, одноразовый пароль, без проверки
+// обновлений RustDesk.
+const H1_APP_NAME: &str = "H1Help";
+const H1_SERVER: &str = "185.73.126.47";
+const H1_KEY: &str = "nek4rztJ63umOmkwd0KVl8ztuwBpeT9zsYlhiyPWBJk=";
+
+fn apply_h1_client() {
+    *config::APP_NAME.write().unwrap() = H1_APP_NAME.to_owned();
+    config::HARD_SETTINGS
+        .write()
+        .unwrap()
+        .insert("conn-type".to_owned(), "incoming".to_owned());
+    let mut settings = config::OVERWRITE_SETTINGS.write().unwrap();
+    for (k, v) in [
+        (keys::OPTION_CUSTOM_RENDEZVOUS_SERVER, H1_SERVER),
+        (keys::OPTION_RELAY_SERVER, H1_SERVER),
+        (keys::OPTION_KEY, H1_KEY),
+        (keys::OPTION_VERIFICATION_METHOD, "use-temporary-password"),
+        (keys::OPTION_APPROVE_MODE, "password"),
+        (keys::OPTION_TEMPORARY_PASSWORD_LENGTH, "6"),
+        (keys::OPTION_ALLOW_AUTO_UPDATE, "N"),
+    ] {
+        settings.insert(k.to_owned(), v.to_owned());
+    }
+    drop(settings);
+    let mut local = config::OVERWRITE_LOCAL_SETTINGS.write().unwrap();
+    for (k, v) in [
+        (keys::OPTION_ENABLE_CHECK_UPDATE, "N"),
+        (keys::OPTION_THEME, "dark"),
+    ] {
+        local.insert(k.to_owned(), v.to_owned());
+    }
+}
+
 pub fn load_custom_client() {
+    apply_h1_client();
     #[cfg(debug_assertions)]
     if let Ok(data) = std::fs::read_to_string("./custom.txt") {
         read_custom_client(data.trim());
